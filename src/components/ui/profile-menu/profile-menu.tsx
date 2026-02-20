@@ -31,7 +31,7 @@ export const ProfileMenuUI: FC<ProfileMenuUIProps> = ({
     </NavLink>
     <button
       className={`text text_type_main-medium text_color_inactive pt-4 pb-4 ${styles.button}`}
-      onClick={handleLogout}
+      onClick={handleLogout} // Здесь будет вызван наш обработчик
     >
       Выход
     </button>
