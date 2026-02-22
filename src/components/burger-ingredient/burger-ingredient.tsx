@@ -12,12 +12,7 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
     const dispatch = useDispatch();
 
     const handleAdd = () => {
-      // генирация уникального id для экземпляра ингредиента в конструкторе
-      const ingredientWithId = {
-        ...ingredient,
-        id: `${ingredient._id}_${Date.now()}`
-      };
-      dispatch(addIngredient(ingredientWithId));
+      dispatch(addIngredient(ingredient));
     };
 
     return (

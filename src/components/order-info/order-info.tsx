@@ -1,5 +1,5 @@
-import { FC, useEffect, useMemo } from 'react';
-import { useSelector, useDispatch } from '../../services/store';
+import { FC, useMemo } from 'react';
+import { useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
@@ -9,6 +9,7 @@ import {
   getOrderByNumber,
   selectOrderByNumber
 } from '../../services/slices/ordersSlice';
+import { useDispatch } from '../../services/store';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams<{ number: string }>();
@@ -17,7 +18,7 @@ export const OrderInfo: FC = () => {
   const ingredients = useSelector(selectIngredients);
   const orderData = useSelector(selectOrderByNumber(Number(number)));
 
-  useEffect(() => {
+  useMemo(() => {
     if (!orderData && number) {
       dispatch(getOrderByNumber(Number(number)));
     }

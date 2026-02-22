@@ -1,4 +1,10 @@
 import React, { useEffect, FC, useState } from 'react';
+import { useDispatch, useSelector } from '../../services/store';
+import {
+  clearOrderData,
+  selectOrderModalData
+} from '../../services/slices/constructorSlice';
+import { OrderDetailsUI } from '@ui';
 import {
   BrowserRouter,
   Routes,
@@ -29,6 +35,8 @@ import {
 
 import '../../index.css';
 import styles from './app.module.css';
+import { fetchIngredients } from '../../services/slices/ingredientsSlice';
+import { getUser } from '../../services/slices/userSlice';
 
 // Компонент для отображения модального окна с информацией о заказе
 const ModalOrderInfo = () => {
@@ -81,6 +89,15 @@ const ModalProfileOrderInfo = () => {
 const App = () => {
   const location = useLocation();
   const background = location.state?.background;
+  const dispatch = useDispatch();
+  const orderModalData = useSelector(selectOrderModalData);
+
+  // Загружаем ингредиенты
+  useEffect(() => {
+    dispatch(fetchIngredients());
+    // Получить данные пользователя по токену
+    dispatch(getUser());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
@@ -174,6 +191,11 @@ const App = () => {
             element={<ModalProfileOrderInfo />}
           />
         </Routes>
+      )}
+      {orderModalData && (
+        <Modal title={''} onClose={() => dispatch(clearOrderData())}>
+          <OrderDetailsUI orderNumber={orderModalData.number} />
+        </Modal>
       )}
     </div>
   );
