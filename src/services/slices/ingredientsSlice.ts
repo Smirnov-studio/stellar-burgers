@@ -11,7 +11,7 @@ type TIngredientsState = {
 };
 
 // Начальное состояние
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   items: [],
   loading: false,
   error: null
